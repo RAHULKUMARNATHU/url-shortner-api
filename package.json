@@ -1,0 +1,24 @@
+{
+  "name": "url-shortner",
+  "version": "1.0.0",
+  "description": "Create a URL shortener project to generate concise, user-friendly links. Implement features like link shortening, custom aliases, and analytics tracking. Ensure secure redirection and user-friendly interfaces for link creation and management, enhancing accessibility and performance.",
+  "main": "server.js",
+  "scripts": {
+    "start:dev": "set NODE_ENV=development&&nodemon server.js",
+    "start:prod": "set NODE_ENV=production&&node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rahul",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.5",
+    "mongoose": "^8.0.3",
+    "morgan": "^1.10.0"
+  },
+  "engines": {
+    "node": "^16"
+  }
+}
