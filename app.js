@@ -2,8 +2,22 @@ const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
+const cors =require('cors')
 
 const app = express();
+
+
+// Use cors middleware with options
+// app.use(
+//   cors({
+//     origin: 'https://your-allowed-origin.com',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true,
+//     optionsSuccessStatus: 204,
+//   })
+// );
+
+// app.use(cors());
 
 /*Development Logging */
 if (process.env.NODE_ENV === "development") {
