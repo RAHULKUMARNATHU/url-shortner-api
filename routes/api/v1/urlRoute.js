@@ -8,7 +8,7 @@ const urlApi = require("../../../controllers/urlController");
 router.route("/:shortUrl").get(urlApi.getShortUrl);
 
 router
-  .route("/")
+  .route("/short")
   .post(passport.authenticate("jwt", { session: false }), urlApi.create);
 
 module.exports = router;

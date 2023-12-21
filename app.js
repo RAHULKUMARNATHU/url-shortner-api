@@ -1,24 +1,12 @@
 const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
+const globalErrorHandler =require('./controllers/errorController')
 const passport = require('passport')
 const passportJWT = require("./config/passport-jwt-strategy");
-// const mongoSanitize = require("express-mongo-sanitize");
-// const cors =require('cors')
+
 
 const app = express();
-
-// Use cors middleware with options
-// app.use(
-//   cors({
-//     origin: 'https://your-allowed-origin.com',
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     credentials: true,
-//     optionsSuccessStatus: 204,
-//   })
-// );
-
-// app.use(cors());
 
 /*Development Logging */
 if (process.env.NODE_ENV === "development") {
@@ -41,5 +29,15 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(passport.initialize());
 
 app.use("/", require("./routes"));
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the homepage!");
+});
+
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can not find ${req.originalUrl} on this server`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
