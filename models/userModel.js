@@ -21,6 +21,13 @@ const userSchema = new mongoose.Schema({
   passwordConfirm: {
     type: String,
     required: [true, "Please confirm your password"],
+    validate: {
+      /*This only works on CREATE and  SAVE!!! */
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: "Password are not the same! ",
+    },
   },
 
   loginAttempts: {
@@ -43,13 +50,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.pre("save", function (next) {
-  if (!this.isModified("password") || this.isNew) return next();
-
-  this.passwordChangedAt = Date.now() - 1000;
-  next();
-});
-
 userSchema.pre(/^find/, function (next) {
   if (this.find({ active: { $ne: false } }));
   next();
@@ -60,17 +60,6 @@ userSchema.methods.correctPassword = async function (
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
-};
-
-userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
-  if (this.passwordChangedAt) {
-    const changedTimeStamp = parseInt(
-      this.passwordChangedAt.getTime() / 1000,
-      10
-    );
-    return JWTTimestamp < changedTimeStamp;
-  }
-  return false;
 };
 
 module.exports = mongoose.model("User", userSchema);
