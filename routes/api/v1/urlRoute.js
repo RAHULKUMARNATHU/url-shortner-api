@@ -3,12 +3,12 @@ const passport = require("passport");
 
 const router = express.Router();
 
-const urlApi = require("../../../controllers/urlController");
+const urlAPI = require("../../../controllers/urlController");
 
-router.route("/:shortUrl").get(urlApi.getShortUrl);
+router.route("/").get(urlAPI.redirectToOriginalURL);
 
 router
   .route("/short")
-  .post(passport.authenticate("jwt", { session: false }), urlApi.create);
+  .post(passport.authenticate("jwt", { session: false }), urlAPI.create);
 
 module.exports = router;

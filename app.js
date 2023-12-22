@@ -1,10 +1,11 @@
 const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
-const globalErrorHandler =require('./controllers/errorController')
-const passport = require('passport')
+const globalErrorHandler = require("./controllers/errorController");
+const passport = require("passport");
 const passportJWT = require("./config/passport-jwt-strategy");
-
+const mongoSanitize = require("express-mongo-sanitize");
+const AppError = require("./utils/appError");
 
 const app = express();
 
@@ -25,6 +26,9 @@ app.use("/api", limiter);
 /*Body parser , reading data from body into req.body */
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
+/*Data sanitization against NoSQL query injection */
+app.use(mongoSanitize());
 
 app.use(passport.initialize());
 

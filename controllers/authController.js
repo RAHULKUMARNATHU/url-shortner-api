@@ -3,6 +3,8 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const User = require("../models/userModel");
 const { promisify } = require("util");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {

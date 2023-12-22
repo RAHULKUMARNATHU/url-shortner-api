@@ -10,6 +10,11 @@ const urlSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      require: [true, "short url must belong to User!"],
+    },
   },
   {
     timestamps: true,
